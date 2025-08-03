@@ -1,0 +1,37 @@
+# ⚙️ General
+.env
+.env.*         # Covers .env.local, .env.production, etc.
+*.log
+*.swp
+*.swo
+.DS_Store
+
+# 🔥 Firebase
+.firebase/
+firebase-debug.log
+
+# 📦 Dependency directories
+node_modules/
+
+# 📁 Build output
+dist/
+out/
+build/
+.next/
+
+# 🔒 Lock files (only include one based on your package manager)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 💻 IDE / OS
+.vscode/
+.idea/
+*.iml
+
+# 🧪 Testing
+coverage/
+.nyc_output/
+
+# 📷 Assets cache (optional)
+public/static/
