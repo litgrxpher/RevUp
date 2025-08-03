@@ -71,9 +71,9 @@ export default function TemplatesPage() {
         </div>
       </header>
       
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
           {templates.map(template => (
-          <Link href={`/templates/edit/${template.id}`} key={template.id}>
+          <Link href={`/templates/edit/${template.id}`} key={template.id} className="w-full max-w-sm md:max-w-none">
               <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col min-h-[180px]">
               <CardHeader className="pb-4 px-4 py-4 md:p-6">
                   <CardTitle className="font-headline text-xl">{template.name}</CardTitle>
@@ -90,12 +90,14 @@ export default function TemplatesPage() {
           </Link>
           ))}
            <CreateTemplateDialog>
-              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col items-center justify-center min-h-[180px] cursor-pointer border-dashed">
-                  <div className="text-center">
-                    <Plus className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                    <p className="text-muted-foreground font-semibold">Create New Template</p>
-                  </div>
-              </Card>
+              <div className="w-full max-w-sm md:max-w-none">
+                <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col items-center justify-center min-h-[180px] cursor-pointer border-dashed">
+                    <div className="text-center">
+                      <Plus className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                      <p className="text-muted-foreground font-semibold">Create New Template</p>
+                    </div>
+                </Card>
+              </div>
             </CreateTemplateDialog>
       </div>
     </div>

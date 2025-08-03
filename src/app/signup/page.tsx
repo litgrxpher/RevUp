@@ -77,8 +77,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background px-12">
-      <Card className="w-full max-w-sm mx-4">
+    <div className="flex items-center justify-center min-h-screen bg-background px-4 sm:px-6 md:px-8">
+      <Card className="w-full max-w-sm mx-auto">
         <CardHeader>
           <CardTitle>Create your RevUp Account</CardTitle>
           <CardDescription>Join us to track your fitness journey.</CardDescription>
