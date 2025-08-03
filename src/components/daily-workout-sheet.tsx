@@ -10,6 +10,17 @@ import { type Unit } from '@/app/page';
 import { type Template } from '@/lib/mock-data';
 import { cn, convertToKgs, convertToLbs } from '@/lib/utils';
 import { isPast, isToday as isTodayDate } from 'date-fns';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export interface Workout {
   name: string;
@@ -94,7 +105,8 @@ const WorkoutRow = ({
   removeSet,
   addSet,
   isFinished,
-  isEditable
+  isEditable,
+  removeExercise
 }: {
   exercise: Workout;
   exerciseIndex: number;
@@ -109,6 +121,7 @@ const WorkoutRow = ({
   addSet: (exIndex: number) => void;
   isFinished: boolean;
   isEditable: boolean;
+  removeExercise: (exIndex: number) => void;
 }) => {
   const displayWeight = unit === 'kgs' ? convertToKgs(exercise.weight) : exercise.weight;
   const displayLastWeight = unit === 'kgs' ? convertToKgs(exercise.lastWeight) : exercise.lastWeight;
@@ -117,7 +130,7 @@ const WorkoutRow = ({
   return (
     <Card className="overflow-hidden shadow-lg">
       <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-2 md:space-y-0 p-4 border-b">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-1">
           <GripVertical className={cn("h-5 w-5 text-muted-foreground", isEditable && !isFinished ? "cursor-move" : "cursor-not-allowed")} />
           <span className={`w-2 h-10 rounded-full ${exercise.color}`}></span>
           <div>
@@ -125,11 +138,34 @@ const WorkoutRow = ({
             <p className="text-sm text-muted-foreground">{exercise.sets} sets x {exercise.reps} reps</p>
           </div>
         </div>
-        <div className="text-right self-end md:self-center">
-          <p className="text-lg font-bold">{displayWeight.toFixed(1)} {unit}</p>
-          <p className={`text-xs ${weightDiff >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-            {weightDiff >= 0 ? '↑' : '↓'} {Math.abs(weightDiff).toFixed(1)} {unit} vs last
-          </p>
+        <div className="flex items-center gap-4 self-end md:self-center">
+            <div className="text-right">
+                <p className="text-lg font-bold">{displayWeight.toFixed(1)} {unit}</p>
+                <p className={`text-xs ${weightDiff >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {weightDiff >= 0 ? '↑' : '↓'} {Math.abs(weightDiff).toFixed(1)} {unit} vs last
+                </p>
+            </div>
+            {isEditable && !isFinished && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete Exercise?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will remove "{exercise.name}" from your workout for this day. This cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => removeExercise(exerciseIndex)}>Delete</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            )}
         </div>
       </CardHeader>
       <CardContent className="p-4 space-y-3">
@@ -257,6 +293,12 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
     }
   };
 
+  const removeExercise = (exerciseIndex: number) => {
+    const newWorkouts = [...editableWorkouts];
+    newWorkouts.splice(exerciseIndex, 1);
+    onUpdate(newWorkouts);
+  };
+
   const onDragStart = (index: number) => {
     if (!isEditable || isFinished) return;
     setDraggedIndex(index);
@@ -331,6 +373,7 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
             addSet={addSet}
             isFinished={isFinished}
             isEditable={isEditable}
+            removeExercise={removeExercise}
           />
         </div>
       ))}
