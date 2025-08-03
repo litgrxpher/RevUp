@@ -63,7 +63,7 @@ export default function TemplatesPage() {
   }, [user]);
 
   return (
-    <div className="container mx-auto max-w-4xl p-4 pt-6 md:p-6">
+    <div className="container mx-auto max-w-5xl p-4 pt-6 md:p-6">
       <header className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="md:hidden" />
@@ -75,11 +75,11 @@ export default function TemplatesPage() {
           {templates.map(template => (
           <Link href={`/templates/edit/${template.id}`} key={template.id} className="w-full md:max-w-none">
               <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col w-full min-h-[180px]">
-              <CardHeader className="pb-4">
+              <CardHeader className="pb-4 px-4 py-4 md:p-6">
                   <CardTitle className="font-headline text-xl">{template.name}</CardTitle>
                   <CardDescription>{template.exercises.length} exercises - {template.restTime}s rest</CardDescription>
               </CardHeader>
-              <CardContent className="flex-grow">
+              <CardContent className="flex-grow px-4 py-4 md:p-6 pt-0">
                   <div className="flex flex-wrap gap-2">
                   {template.assignedDays.map(day => (
                       <Badge key={day} variant="secondary">{day}</Badge>
