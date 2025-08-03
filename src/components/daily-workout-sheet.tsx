@@ -9,7 +9,7 @@ import { Plus, Timer, Trash2, PlusCircle, ClipboardList, GripVertical, CheckCirc
 import { type Unit } from '@/app/page';
 import { type Template } from '@/lib/mock-data';
 import { cn, convertToKgs, convertToLbs } from '@/lib/utils';
-import { isPast, isToday as isTodayDate } from 'date-fns';
+import { isPast, isToday as isTodayDate, isSameDay } from 'date-fns';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -230,7 +230,7 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  const isEditable = isTodayDate(selectedDate) || !isPast(selectedDate);
+  const isEditable = isToday && !isFinished;
 
   useEffect(() => {
     setEditableWorkouts(workouts);
@@ -328,6 +328,9 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
     }, 2000); // Show "Saved!" for 2 seconds
   }
 
+  const isAddTemplateDisabled = isFinished || (!isSameDay(selectedDate, new Date()) && isPast(selectedDate));
+
+
   if (workouts.length === 0) {
     return (
       <Card className="text-center p-8 border-dashed">
@@ -338,7 +341,7 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
         </CardHeader>
         <CardContent className="flex flex-wrap justify-center gap-2">
             {templates.map(template => (
-                <Button key={template.id} variant="outline" className="h-auto whitespace-normal" onClick={() => onAddTemplate(template)} disabled={isFinished || !isEditable}>
+                <Button key={template.id} variant="outline" className="h-auto whitespace-normal" onClick={() => onAddTemplate(template)} disabled={isAddTemplateDisabled}>
                     Add {template.name}
                 </Button>
             ))}
@@ -377,7 +380,7 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
           />
         </div>
       ))}
-      <Button variant="outline" className="w-full" disabled={isFinished || !isEditable}>
+      <Button variant="outline" className="w-full" disabled={!isEditable}>
         <Plus className="mr-2 h-4 w-4" /> Add Exercise
       </Button>
        {isToday && !isFinished && (

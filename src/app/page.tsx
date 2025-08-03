@@ -225,7 +225,8 @@ export default function Home() {
   
   const selectedDayWorkouts = workouts[format(selectedDate, 'yyyy-MM-dd')] || [];
   const isWorkoutFinishedForSelectedDate = finishedWorkouts.includes(format(selectedDate, 'yyyy-MM-dd'));
-  const isEditable = !isWorkoutFinishedForSelectedDate && (!isPast(selectedDate) || isSameDay(selectedDate, new Date()));
+  const isToday = isSameDay(selectedDate, new Date());
+  const isEditable = isToday && !isWorkoutFinishedForSelectedDate;
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -248,7 +249,7 @@ export default function Home() {
         </header>
         
         <section className="mb-6 -mx-4 md:-mx-6 bg-card/50">
-          <HorizontalCalendar selectedDate={selectedDate} onDateSelect={setSelectedDate} workouts={workouts} completedDates={completedDates} />
+          <HorizontalCalendar selectedDate={selectedDate} onDateSelect={setSelectedDate} workouts={workouts} completedDates={completedates} />
         </section>
 
         <section>
@@ -272,7 +273,7 @@ export default function Home() {
             unit={unit} 
             onUpdate={handleWorkoutUpdate}
             onFinish={handleFinishWorkout}
-            isToday={isSameDay(selectedDate, new Date())}
+            isToday={isToday}
             templates={Object.values(templates)}
             onAddTemplate={handleAddTemplate}
             isFinished={isWorkoutFinishedForSelectedDate}
@@ -283,5 +284,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
