@@ -249,7 +249,7 @@ export default function Home() {
         </header>
         
         <section className="mb-6 -mx-4 md:-mx-6 bg-card/50">
-          <HorizontalCalendar selectedDate={selectedDate} onDateSelect={setSelectedDate} workouts={workouts} completedDates={completedates} />
+          <HorizontalCalendar selectedDate={selectedDate} onDateSelect={setSelectedDate} workouts={workouts} completedDates={completedDates} />
         </section>
 
         <section>
