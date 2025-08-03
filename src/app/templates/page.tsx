@@ -9,8 +9,46 @@ import Link from 'next/link';
 import { MOCK_TEMPLATES_DATA, Template } from '@/lib/mock-data';
 import { useState, useEffect } from 'react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Logo } from '@/components/icons';
 import { useAuth } from '@/components/auth-provider';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useRouter } from 'next/navigation';
+
+function CreateTemplateDialog({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  const handleNavigate = (path: string) => {
+    const dialog = document.querySelector('[role="dialog"]');
+    if (dialog) {
+      dialog.removeAttribute('data-state');
+      dialog.setAttribute('aria-hidden', 'true');
+    }
+    router.push(path);
+  };
+  
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a new template</DialogTitle>
+          <DialogDescription>
+            How would you like to start? You can create a template from scratch or use AI to generate one for you.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid grid-cols-2 gap-4 py-4">
+            <Button variant="outline" className="h-24 flex-col gap-2" onClick={() => handleNavigate('/templates/edit/new')}>
+              <Plus className="h-6 w-6" />
+              <span>Create Manually</span>
+            </Button>
+            <Button variant="outline" className="h-24 flex-col gap-2" onClick={() => handleNavigate('/templates/generate')}>
+              <Bot className="h-6 w-6" />
+              <span>Use AI</span>
+            </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function TemplatesPage() {
   const { user } = useAuth();
@@ -31,53 +69,35 @@ export default function TemplatesPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-2xl md:text-3xl font-bold font-headline">Workout Templates</h1>
         </div>
-        <div className="flex items-center gap-2">
-            <Button asChild variant="outline">
-                <Link href="/templates/generate">
-                    <Bot className="mr-2 h-4 w-4" /> Create with AI
-                </Link>
-            </Button>
-            <Button asChild>
-                <Link href="/templates/edit/new">
-                    <Plus className="mr-2 h-4 w-4" /> Create
-                </Link>
-            </Button>
-        </div>
       </header>
       
-      {templates.length === 0 ? (
-        <div className="flex justify-center items-center h-full py-16">
-          <div className="text-center flex flex-col items-center">
-              <h2 className="text-2xl font-bold font-headline">No Templates Yet</h2>
-              <p className="text-muted-foreground mt-2 mb-6">Create your first workout template to get started.</p>
-              <Button asChild>
-                  <Link href="/templates/edit/new">
-                      <Plus className="mr-2 h-4 w-4" /> Create New Template
-                  </Link>
-              </Button>
-          </div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
-            {templates.map(template => (
-            <Link href={`/templates/edit/${template.id}`} key={template.id} className="w-full">
-                <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col w-full">
-                <CardHeader className="pb-4">
-                    <CardTitle className="font-headline text-xl">{template.name}</CardTitle>
-                    <CardDescription>{template.exercises.length} exercises - {template.restTime}s rest</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                    <div className="flex flex-wrap gap-2">
-                    {template.assignedDays.map(day => (
-                        <Badge key={day} variant="secondary">{day}</Badge>
-                    ))}
-                    </div>
-                </CardContent>
-                </Card>
-            </Link>
-            ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {templates.map(template => (
+          <Link href={`/templates/edit/${template.id}`} key={template.id} className="w-full">
+              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col w-full">
+              <CardHeader className="pb-4">
+                  <CardTitle className="font-headline text-xl">{template.name}</CardTitle>
+                  <CardDescription>{template.exercises.length} exercises - {template.restTime}s rest</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                  <div className="flex flex-wrap gap-2">
+                  {template.assignedDays.map(day => (
+                      <Badge key={day} variant="secondary">{day}</Badge>
+                  ))}
+                  </div>
+              </CardContent>
+              </Card>
+          </Link>
+          ))}
+           <CreateTemplateDialog>
+              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col w-full items-center justify-center min-h-[150px] cursor-pointer border-dashed">
+                  <div className="text-center">
+                    <Plus className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                    <p className="text-muted-foreground font-semibold">Create New Template</p>
+                  </div>
+              </Card>
+            </CreateTemplateDialog>
+      </div>
     </div>
   );
 }
