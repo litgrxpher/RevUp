@@ -63,7 +63,7 @@ export default function TemplatesPage() {
   }, [user]);
 
   return (
-    <div className="container mx-auto p-4 pt-6 md:p-6">
+    <div className="container mx-auto p-4 pt-6 md:p-6 md:max-w-7xl">
       <header className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="md:hidden" />
