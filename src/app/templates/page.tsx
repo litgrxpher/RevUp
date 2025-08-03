@@ -63,7 +63,7 @@ export default function TemplatesPage() {
   }, [user]);
 
   return (
-    <div className="container mx-auto max-w-5xl p-4 pt-6 md:p-6">
+    <div className="container mx-auto max-w-7xl p-4 pt-6 md:p-6">
       <header className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="md:hidden" />
@@ -71,10 +71,10 @@ export default function TemplatesPage() {
         </div>
       </header>
       
-      <div className="flex flex-col items-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {templates.map(template => (
-          <Link href={`/templates/edit/${template.id}`} key={template.id} className="w-full md:max-w-none">
-              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col w-full min-h-[180px]">
+          <Link href={`/templates/edit/${template.id}`} key={template.id}>
+              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col min-h-[180px]">
               <CardHeader className="pb-4 px-4 py-4 md:p-6">
                   <CardTitle className="font-headline text-xl">{template.name}</CardTitle>
                   <CardDescription>{template.exercises.length} exercises - {template.restTime}s rest</CardDescription>
@@ -90,7 +90,7 @@ export default function TemplatesPage() {
           </Link>
           ))}
            <CreateTemplateDialog>
-              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col w-full md:max-w-none items-center justify-center min-h-[180px] cursor-pointer border-dashed">
+              <Card className="hover:bg-muted/50 transition-colors h-full flex flex-col items-center justify-center min-h-[180px] cursor-pointer border-dashed">
                   <div className="text-center">
                     <Plus className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                     <p className="text-muted-foreground font-semibold">Create New Template</p>
