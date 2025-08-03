@@ -77,9 +77,9 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background px-4 sm:px-6 md:px-8">
-      <Card className="w-full max-w-sm mx-auto">
-        <CardHeader>
+    <div className="flex items-center justify-center h-screen w-screen bg-background">
+      <Card className="w-full max-w-sm">
+        <CardHeader className="flex flex-col items-center text-center">
           <CardTitle>Create your RevUp Account</CardTitle>
           <CardDescription>Join us to track your fitness journey.</CardDescription>
         </CardHeader>
@@ -98,11 +98,11 @@ export default function SignupPage() {
           </div>
           <Button className="w-full" onClick={handleSignup}>Create Account</Button>
         </CardContent>
-        <CardFooter className="flex justify-between items-center">
-            <Logo/>
-            <p className="text-sm text-muted-foreground">
-                Already have an account? <Link href="/login" className="text-primary hover:underline">Log in</Link>
-            </p>
+        <CardFooter className="flex flex-col items-center gap-2">
+          <Logo />
+          <p className="text-sm text-muted-foreground text-center">
+            Already have an account? <Link href="/login" className="text-primary hover:underline">Log in</Link>
+          </p>
         </CardFooter>
       </Card>
     </div>

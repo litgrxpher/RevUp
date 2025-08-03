@@ -36,8 +36,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background px-4">
-      <Card className="w-full max-w-sm mx-auto">
+    <div className="flex items-center justify-center h-screen w-screen bg-background">
+      <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <Logo />
           <CardTitle className="mt-4">Welcome to RevUp</CardTitle>
@@ -61,5 +61,5 @@ export default function LoginPage() {
         </CardFooter>
       </Card>
     </div>
-  );
+  );  
 }
