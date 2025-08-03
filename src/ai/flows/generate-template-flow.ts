@@ -26,7 +26,7 @@ const GenerateTemplateOutputSchema = z.object({
     // sets: z.number().int().positive().describe("The recommended number of sets for this exercise."),
     // reps: z.number().int().positive().describe("The recommended number of repetitions per set."),
   })).describe("A list of 3 to 6 exercises for the workout template."),
-  restTime: z.number().int().positive().describe("Recommended rest time in seconds between sets. Common values are 60, 90, 120, or 180."),
+  restTime: z.number().int().describe("Recommended rest time in seconds between sets. Common values are 60, 90, 120, or 180."),
 });
 export type GenerateTemplateOutput = z.infer<typeof GenerateTemplateOutputSchema>;
 
