@@ -54,6 +54,7 @@ const prompt = ai.definePrompt({
   2.  Provide a list of 3 to 6 relevant exercises that align with the user's focus, level, and goal.
   3.  Recommend an appropriate rest time in seconds between sets (e.g., 60 for shorter rests, 120-180 for heavy compound lifts).
   4.  The output MUST strictly follow the provided JSON schema. Do not include sets or reps in the output, only the exercise name.
+  5.  You must provide between 3 and 6 exercises in the 'exercises' array.
 `,
 });
 
