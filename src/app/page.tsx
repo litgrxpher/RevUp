@@ -1,7 +1,7 @@
 
 "use client";
 
-import { addDays, format, isSameDay, startOfWeek, subDays } from 'date-fns';
+import { addDays, format, isPast, isSameDay, startOfWeek, subDays } from 'date-fns';
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -225,6 +225,7 @@ export default function Home() {
   
   const selectedDayWorkouts = workouts[format(selectedDate, 'yyyy-MM-dd')] || [];
   const isWorkoutFinishedForSelectedDate = finishedWorkouts.includes(format(selectedDate, 'yyyy-MM-dd'));
+  const isEditable = !isWorkoutFinishedForSelectedDate && (!isPast(selectedDate) || isSameDay(selectedDate, new Date()));
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -259,10 +260,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="warmup-toggle" className="flex items-center gap-2 text-sm cursor-pointer">
+              <Label htmlFor="warmup-toggle" className={cn("flex items-center gap-2 text-sm", !isEditable && "cursor-not-allowed opacity-50")}>
                 <Flame className="h-4 w-4 text-accent" /> Warm-up
               </Label>
-              <Switch id="warmup-toggle" />
+              <Switch id="warmup-toggle" disabled={!isEditable} />
             </div>
           </div>
 
@@ -282,3 +283,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
