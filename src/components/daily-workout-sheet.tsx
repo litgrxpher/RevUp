@@ -336,9 +336,9 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
             <CardTitle>No Workout Scheduled</CardTitle>
             <CardDescription>Choose a template to get started.</CardDescription>
         </CardHeader>
-        <CardContent className="grid sm:grid-cols-2 md:grid-cols-3 gap-2">
+        <CardContent className="flex flex-wrap justify-center gap-2">
             {templates.map(template => (
-                <Button key={template.id} variant="outline" className="w-full justify-center h-auto whitespace-normal" onClick={() => onAddTemplate(template)} disabled={isFinished || !isEditable}>
+                <Button key={template.id} variant="outline" className="h-auto whitespace-normal" onClick={() => onAddTemplate(template)} disabled={isFinished || !isEditable}>
                     Add {template.name}
                 </Button>
             ))}
