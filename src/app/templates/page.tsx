@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Plus } from 'lucide-react';
+import { Bot, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -31,13 +31,18 @@ export default function TemplatesPage() {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-2xl md:text-3xl font-bold font-headline">Workout Templates</h1>
         </div>
-        {templates.length > 0 && (
-          <Button asChild>
-            <Link href="/templates/edit/new">
-              <Plus className="mr-2 h-4 w-4" /> Create
-            </Link>
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+            <Button asChild variant="outline">
+                <Link href="/templates/generate">
+                    <Bot className="mr-2 h-4 w-4" /> Create with AI
+                </Link>
+            </Button>
+            <Button asChild>
+                <Link href="/templates/edit/new">
+                    <Plus className="mr-2 h-4 w-4" /> Create
+                </Link>
+            </Button>
+        </div>
       </header>
       
       {templates.length === 0 ? (
@@ -71,12 +76,6 @@ export default function TemplatesPage() {
                 </Card>
             </Link>
             ))}
-            <Link href="/templates/edit/new" className="w-full">
-                <Card className="border-dashed hover:border-primary hover:text-primary transition-colors text-center text-muted-foreground p-8 cursor-pointer min-h-[180px] flex flex-col justify-center items-center w-full h-full">
-                <Plus className="mx-auto h-8 w-8 mb-2" />
-                <p className="font-medium">Create New Template</p>
-                </Card>
-            </Link>
         </div>
       )}
     </div>
