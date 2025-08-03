@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import Link from 'next/link';
 import { Logo } from '@/components/icons';
 import { useToast } from '@/hooks/use-toast';
@@ -38,8 +38,8 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-full max-w-sm mx-4">
-        <CardHeader className="text-center">
-          <Logo className="mx-auto" />
+        <CardHeader>
+          <Logo />
           <CardTitle className="mt-4">Welcome to RevUp</CardTitle>
           <CardDescription>Enter your credentials to continue</CardDescription>
         </CardHeader>
@@ -53,10 +53,12 @@ export default function LoginPage() {
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" />
           </div>
           <Button className="w-full" onClick={handleLogin}>Login</Button>
-          <p className="text-center text-sm text-muted-foreground">
+        </CardContent>
+        <CardFooter>
+          <p className="text-sm text-muted-foreground">
             New to RevUp? <Link href="/signup" className="text-primary hover:underline">Create an account</Link>
           </p>
-        </CardContent>
+        </CardFooter>
       </Card>
     </div>
   );
