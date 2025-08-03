@@ -45,16 +45,16 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-left w-full block">Email</Label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your_email@example.com" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-left w-full block">Password</Label>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" />
           </div>
           <Button className="w-full" onClick={handleLogin}>Login</Button>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
             New to RevUp? <Link href="/signup" className="text-primary hover:underline">Create an account</Link>
           </p>
