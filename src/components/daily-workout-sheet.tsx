@@ -166,7 +166,7 @@ const WorkoutRow = ({
                         <span className="text-sm font-medium">Done</span>
                      </div>
                   ) : (
-                    <Button size="sm" variant="outline" onClick={() => handleLogSet(exerciseIndex, setIndex)} disabled={!isToday}>
+                    <Button size="sm" variant="outline" onClick={() => handleLogSet(exerciseIndex, setIndex)} disabled={!isToday || isFinished}>
                         Log
                     </Button>
                   )}
@@ -201,7 +201,7 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
   }, [workouts]);
   
   const handleLogSet = (exerciseIndex: number, setIndex: number) => {
-    if (!isToday) return;
+    if (!isToday || isFinished) return;
 
     const newWorkouts = [...editableWorkouts];
     // We only set the timer if we are logging the set, not un-logging it.
