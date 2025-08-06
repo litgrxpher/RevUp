@@ -3,13 +3,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ClipboardList, Dumbbell } from "lucide-react"
+import { ClipboardList, Dumbbell, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAuth } from "./auth-provider"
 
 const navItems = [
   { href: "/", label: "Workout", icon: Dumbbell },
   { href: "/templates", label: "Templates", icon: ClipboardList },
+  { href: "/settings", label: "Settings", icon: Settings },
 ]
 
 export default function BottomNav() {
@@ -25,7 +26,7 @@ export default function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 h-16 border-t border-border/20 bg-background/80 backdrop-blur-sm md:hidden">
-      <div className="mx-auto grid h-full max-w-lg grid-cols-2 font-medium">
+      <div className="mx-auto grid h-full max-w-lg grid-cols-3 font-medium">
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (

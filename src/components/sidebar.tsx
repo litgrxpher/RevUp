@@ -2,7 +2,7 @@
 "use client"
 
 import { usePathname } from "next/navigation";
-import { ClipboardList, Dumbbell, LogOut } from "lucide-react";
+import { ClipboardList, Dumbbell, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/icons";
 import {
@@ -65,14 +65,19 @@ const AppSidebar = () => {
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
-            <Button variant="ghost" onClick={handleLogout} className="w-full justify-start gap-2">
-                <LogOut/>
-                <span className={cn(state === 'collapsed' && 'hidden')}>Logout</span>
-            </Button>
+            <SidebarMenu>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton asChild isActive={pathname === '/settings'} tooltip="Settings">
+                        <Link href="/settings">
+                            <Settings />
+                            <span>Settings</span>
+                        </Link>
+                    </SidebarMenuButton>
+                 </SidebarMenuItem>
+            </SidebarMenu>
         </SidebarFooter>
       </Sidebar>
     );
   };
   
   export default AppSidebar;
-
