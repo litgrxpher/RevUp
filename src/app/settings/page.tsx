@@ -58,12 +58,21 @@ export default function SettingsPage() {
             description: "Your account has been permanently deleted.",
         });
         router.push('/signup');
-      } catch (error) {
-        toast({
-            title: "Deletion Failed",
-            description: "An error occurred while deleting your account. Please try again.",
-            variant: "destructive",
-        });
+      } catch (error: any) {
+        if (error.code === 'auth/requires-recent-login') {
+            toast({
+                title: "Authentication Required",
+                description: "This is a sensitive action. Please log out and log back in to delete your account.",
+                variant: "destructive",
+                duration: 5000,
+            });
+        } else {
+            toast({
+                title: "Deletion Failed",
+                description: "An error occurred while deleting your account. Please try again.",
+                variant: "destructive",
+            });
+        }
       }
     }
   };
