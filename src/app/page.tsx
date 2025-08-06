@@ -78,15 +78,16 @@ export default function Home() {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(new Date());
   
-  const [unit, setUnit] = useState<Unit>(() => {
+  const [unit, setUnit] = useState<Unit>('kgs');
+
+  useEffect(() => {
     if (typeof window !== 'undefined' && user) {
       const savedUnit = localStorage.getItem(`unit_${user.uid}`) as Unit;
       if (savedUnit && ['lbs', 'kgs'].includes(savedUnit)) {
-        return savedUnit;
+        setUnit(savedUnit);
       }
     }
-    return 'kgs'; // Default to kgs
-  });
+  }, [user]);
 
   const [workouts, setWorkouts] = useState(() => {
     if (typeof window !== 'undefined' && user) {
@@ -147,17 +148,6 @@ export default function Home() {
       localStorage.setItem(`templates_${user.uid}`, JSON.stringify(templates));
     }
   }, [templates, user]);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem(`unit_${user.uid}`, unit);
-    }
-  }, [unit, user]);
-
-  const toggleUnit = () => {
-    const newUnit = unit === 'lbs' ? 'kgs' : 'lbs';
-    setUnit(newUnit);
-  };
   
   const handleWorkoutUpdate = (updatedWorkouts: Workout[]) => {
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
@@ -238,12 +228,6 @@ export default function Home() {
             <h1 className="text-2xl md:text-3xl font-bold font-headline">RevUp</h1>
           </div>
           <div className="flex items-center gap-2 md:gap-4">
-            <div className="flex items-center space-x-2">
-                <Label htmlFor="unit-toggle" className="text-sm cursor-pointer w-12 text-right">
-                  {unit.toUpperCase()}
-                </Label>
-                <Switch id="unit-toggle" checked={unit === 'kgs'} onCheckedChange={toggleUnit} />
-              </div>
             <ThemeToggle />
           </div>
         </header>
