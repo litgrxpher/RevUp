@@ -116,7 +116,7 @@ const WorkoutRow = ({
   isToday: boolean;
   restingState: {exerciseIndex: number, setIndex: number} | null;
   setRestingState: (state: {exerciseIndex: number, setIndex: number} | null) => void;
-  handleInputChange: (exerciseIndex: number, field: 'reps' | 'weight', value: string) => void;
+  handleInputChange: (exerciseIndex: number, field: 'name' | 'reps' | 'weight', value: string) => void;
   removeSet: (exIndex: number, setIndex: number) => void;
   addSet: (exIndex: number) => void;
   isFinished: boolean;
@@ -134,7 +134,13 @@ const WorkoutRow = ({
           <GripVertical className={cn("h-5 w-5 text-muted-foreground", isEditable && !isFinished ? "cursor-move" : "cursor-not-allowed")} />
           <span className={`w-2 h-10 rounded-full ${exercise.color}`}></span>
           <div>
-            <CardTitle className="text-lg font-headline">{exercise.name}</CardTitle>
+            <Input 
+              value={exercise.name}
+              onChange={(e) => handleInputChange(exerciseIndex, 'name', e.target.value)}
+              className="text-lg font-headline font-semibold h-auto p-0 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+              placeholder="Exercise Name"
+              disabled={!isEditable}
+            />
             <p className="text-sm text-muted-foreground">{exercise.sets} sets x {exercise.reps} reps</p>
           </div>
         </div>
@@ -263,18 +269,22 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
     return editableWorkouts[exerciseIndex]?.loggedSets?.[setIndex] || false;
   }
 
-  const handleInputChange = (exerciseIndex: number, field: 'reps' | 'weight', value: string) => {
+  const handleInputChange = (exerciseIndex: number, field: 'name' | 'reps' | 'weight', value: string) => {
     const newWorkouts = [...editableWorkouts];
-    const numValue = parseFloat(value);
-    if (!isNaN(numValue)) {
-      if (field === 'weight') {
-        const weightInLbs = unit === 'kgs' ? convertToLbs(numValue) : numValue;
-        newWorkouts[exerciseIndex] = { ...newWorkouts[exerciseIndex], weight: weightInLbs };
-      } else {
-        newWorkouts[exerciseIndex] = { ...newWorkouts[exerciseIndex], [field]: numValue };
+    if (field === 'name') {
+      newWorkouts[exerciseIndex] = { ...newWorkouts[exerciseIndex], name: value };
+    } else {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue)) {
+        if (field === 'weight') {
+          const weightInLbs = unit === 'kgs' ? convertToLbs(numValue) : numValue;
+          newWorkouts[exerciseIndex] = { ...newWorkouts[exerciseIndex], weight: weightInLbs };
+        } else {
+          newWorkouts[exerciseIndex] = { ...newWorkouts[exerciseIndex], [field]: numValue };
+        }
       }
-      onUpdate(newWorkouts);
     }
+    onUpdate(newWorkouts);
   }
 
   const addSet = (exerciseIndex: number) => {
@@ -298,6 +308,21 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
     newWorkouts.splice(exerciseIndex, 1);
     onUpdate(newWorkouts);
   };
+
+  const addExercise = () => {
+    const newExercise: Workout = {
+      name: 'New Exercise',
+      sets: 3,
+      reps: 8,
+      weight: 0,
+      lastWeight: 0,
+      color: 'bg-gray-500',
+      loggedSets: [],
+      restTime: 60,
+    };
+    onUpdate([...editableWorkouts, newExercise]);
+  };
+
 
   const onDragStart = (index: number) => {
     if (!isEditable || isFinished) return;
@@ -380,7 +405,7 @@ export function DailyWorkoutSheet({ workouts, unit, onUpdate, onFinish, isToday,
           />
         </div>
       ))}
-      <Button variant="outline" className="w-full" disabled={!isEditable}>
+      <Button variant="outline" className="w-full" disabled={!isEditable} onClick={addExercise}>
         <Plus className="mr-2 h-4 w-4" /> Add Exercise
       </Button>
        {isToday && !isFinished && (
