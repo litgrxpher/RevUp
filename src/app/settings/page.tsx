@@ -140,15 +140,15 @@ export default function SettingsPage() {
                 <CardDescription>Information about the application.</CardDescription>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground space-y-4">
-                <p><strong>RevUp</strong> is a smart workout logger built by <strong>Adharsh CS</strong> using <strong>Firebase Studio</strong> to demonstrate the capabilities of an AI coding assistant. It was created with Next.js, React, ShadCN, Tailwind CSS, Firebase, and Genkit.</p>
+                <p><strong>RevUp</strong> is a smart workout logger built using <strong>Firebase Studio</strong> to demonstrate the capabilities of an AI coding assistant. It was created with Next.js, React, ShadCN, Tailwind CSS, Firebase, and Genkit.</p>
                 <div className="flex items-center gap-4">
-                    <Link href="https://www.instagram.com/adharsh.cs" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://www.instagram.com/litgrxpher" target="_blank" rel="noopener noreferrer">
                         <InstagramIcon className="w-6 h-6 hover:text-primary transition-colors" />
                     </Link>
-                    <Link href="https://github.com/Adharshcs" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://github.com/litgrxpher" target="_blank" rel="noopener noreferrer">
                         <GithubIcon className="w-6 h-6 hover:text-primary transition-colors" />
                     </Link>
-                    <Link href="https://www.linkedin.com/in/adharsh-cs-2b2810287" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://www.linkedin.com/in/csadharsh/" target="_blank" rel="noopener noreferrer">
                         <LinkedinIcon className="w-6 h-6 hover:text-primary transition-colors" />
                     </Link>
                 </div>
